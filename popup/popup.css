@@ -84,10 +84,10 @@
   --color-bg-tertiary: #1a1a1a;
   --color-bg-card: #141414;
   --color-text: #fafafa;
-  --color-text-secondary: #a3a3a3;
-  --color-text-muted: #525252;
-  --color-border: #262626;
-  --color-border-subtle: #1f1f1f;
+  --color-text-secondary: #d4d4d4;
+  --color-text-muted: #a3a3a3;
+  --color-border: #333333;
+  --color-border-subtle: #262626;
 
   --color-primary-light: rgba(34, 197, 94, 0.15);
   --color-primary-glow: rgba(34, 197, 94, 0.3);
@@ -107,8 +107,8 @@
 }
 
 html, body {
-  width: 360px;
-  height: 480px;
+  width: 320px;
+  height: 460px;
   overflow: hidden;
 }
 
@@ -238,9 +238,9 @@ body {
 
 .btn--large {
   width: 100%;
-  height: 52px;
-  font-size: 15px;
-  border-radius: var(--radius-xl);
+  height: 46px;
+  font-size: 14px;
+  border-radius: var(--radius-lg);
 }
 
 /* ========================================
@@ -248,7 +248,7 @@ body {
    ======================================== */
 
 .screen--home {
-  padding: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   display: flex;
   flex-direction: column;
 }
@@ -258,30 +258,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-3);
 }
 
 .home-title {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  font-size: 16px;
+  gap: var(--space-2);
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 
 .home-title__icon {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-primary);
-  color: white;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-md);
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: -0.02em;
+  object-fit: contain;
 }
 
 .home-controls {
@@ -294,37 +287,38 @@ body {
   flex: 1;
   background: var(--color-bg-card);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-5);
-  margin-bottom: var(--space-4);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
   display: flex;
   flex-direction: column;
 }
 
 .preset-card__title {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
   text-align: center;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
+  color: var(--color-text);
 }
 
 .preset-card__desc {
   color: var(--color-text-secondary);
-  font-size: 13px;
+  font-size: 12px;
   text-align: center;
   line-height: 1.5;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 /* Features description - sentence style */
 .preset-card__info {
   color: var(--color-text-secondary);
-  font-size: 12px;
+  font-size: 11px;
   text-align: center;
-  line-height: 1.6;
-  margin-top: var(--space-4);
-  padding-top: var(--space-3);
+  line-height: 1.5;
+  margin-top: var(--space-3);
+  padding-top: var(--space-2);
   border-top: 1px solid var(--color-border-subtle);
 }
 
@@ -340,37 +334,39 @@ body {
   flex: 1;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 150px;
+  min-height: 130px;
 }
 
 .tutorial__problem {
   font-family: var(--font-mono);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   text-align: center;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
   letter-spacing: 0.02em;
+  color: var(--color-text);
 }
 
 .tutorial__input {
   width: 100%;
-  max-width: 200px;
+  max-width: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
+  height: 40px;
   background: var(--color-bg-secondary);
   border: 2px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   font-family: var(--font-mono);
-  font-size: 18px;
-  margin-bottom: var(--space-3);
+  font-size: 16px;
+  margin-bottom: var(--space-2);
   transition: all var(--transition-fast);
+  color: var(--color-text);
 }
 
 .tutorial__cursor {
@@ -477,8 +473,8 @@ body {
 .home-stats {
   display: flex;
   justify-content: center;
-  gap: var(--space-8);
-  padding: var(--space-3) 0;
+  gap: var(--space-6);
+  padding: var(--space-2) 0;
 }
 
 .home-stat {
@@ -489,7 +485,7 @@ body {
 }
 
 .home-stat__label {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -498,7 +494,7 @@ body {
 
 .home-stat__value {
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -532,7 +528,7 @@ body {
 }
 
 .countdown__number {
-  font-size: 140px;
+  font-size: 120px;
   font-weight: 800;
   line-height: 0.85;
   color: var(--color-text);
@@ -542,7 +538,7 @@ body {
 }
 
 .countdown__number--go {
-  font-size: 80px;
+  font-size: 70px;
   color: var(--color-primary);
   letter-spacing: -0.02em;
 }
@@ -726,25 +722,26 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-6) var(--space-4);
+  padding: var(--space-4) var(--space-3);
 }
 
 /* Problem Display */
 .drill-problem {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-6) var(--space-4);
-  margin-bottom: var(--space-4);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-3);
+  margin-bottom: var(--space-3);
 }
 
 .drill-problem__text {
   display: block;
   font-family: var(--font-mono);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 500;
   text-align: center;
   letter-spacing: 0.02em;
+  color: var(--color-text);
 }
 
 /* Operator highlighting */
@@ -760,13 +757,13 @@ body {
 
 .drill-input {
   width: 100%;
-  height: 56px;
-  padding: 0 var(--space-4);
+  height: 50px;
+  padding: 0 var(--space-3);
   background: var(--color-bg);
   border: 2px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   font-family: var(--font-mono);
-  font-size: 22px;
+  font-size: 20px;
   text-align: center;
   color: var(--color-text);
   outline: none;
