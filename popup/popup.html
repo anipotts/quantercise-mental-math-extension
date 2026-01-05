@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=360, height=480">
+  <title>Quantercise Mental Math</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app" class="app">
+
+    <!-- ==================== HOME SCREEN ==================== -->
+    <div id="screen-home" class="screen screen--home">
+      <!-- Header -->
+      <header class="home-header">
+        <h1 class="home-title">
+          <span class="home-title__icon">Q</span>
+          Mental Math
+        </h1>
+        <div class="home-controls">
+          <button id="btn-sound" class="icon-btn" aria-label="Toggle sound">
+            <svg class="icon icon--sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+            <svg class="icon icon--sound-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+          </button>
+          <button id="btn-theme" class="icon-btn" aria-label="Toggle theme">
+            <svg class="icon icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="icon icon--moon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Preset Card -->
+      <div class="preset-card">
+        <h2 class="preset-card__title">Quick Drill</h2>
+        <p class="preset-card__desc">Just two minutes of pure arithmetic</p>
+
+        <!-- Tutorial Animation Container -->
+        <div id="tutorial-animation" class="tutorial">
+          <div class="tutorial__problem" id="tutorial-problem">17 &times; 8 =</div>
+          <div class="tutorial__input" id="tutorial-input">
+            <span id="tutorial-typed"></span>
+            <span class="tutorial__cursor"></span>
+          </div>
+          <div class="tutorial__controls">
+            <div class="tutorial__control">
+              <kbd class="tutorial__key" id="key-tab">Tab</kbd>
+              <span class="tutorial__label">Skip</span>
+            </div>
+            <div class="tutorial__control">
+              <kbd class="tutorial__key" id="key-enter">Enter</kbd>
+              <span class="tutorial__label">Submit</span>
+            </div>
+          </div>
+          <div class="tutorial__dots">
+            <span class="tutorial__dot" data-step="0"></span>
+            <span class="tutorial__dot" data-step="1"></span>
+            <span class="tutorial__dot" data-step="2"></span>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div class="preset-card__features">
+          <span class="feature-badge">+</span>
+          <span class="feature-badge">&minus;</span>
+          <span class="feature-badge">&times;</span>
+          <span class="feature-badge">&divide;</span>
+          <span class="feature-badge feature-badge--time">2:00</span>
+        </div>
+      </div>
+
+      <!-- Start Button -->
+      <button id="btn-start" class="btn btn--primary btn--large">
+        <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="5,3 19,12 5,21"></polygon>
+        </svg>
+        Start Drill
+      </button>
+
+      <!-- Stats Footer -->
+      <div class="home-stats">
+        <div class="home-stat">
+          <span class="home-stat__label">Best</span>
+          <span class="home-stat__value" id="stat-best">--</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat__label">Last</span>
+          <span class="home-stat__value" id="stat-last">--</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat__label">Drills</span>
+          <span class="home-stat__value" id="stat-total">0</span>
+        </div>
+      </div>
+
+      <!-- Footer Link -->
+      <a href="https://quantercise.com" target="_blank" rel="noopener" class="home-link">
+        quantercise.com
+      </a>
+    </div>
+
+    <!-- ==================== COUNTDOWN SCREEN ==================== -->
+    <div id="screen-countdown" class="screen screen--countdown hidden">
+      <div class="countdown">
+        <div class="countdown__number" id="countdown-value">3</div>
+        <div class="countdown__dots">
+          <span class="countdown__dot" data-index="0"></span>
+          <span class="countdown__dot" data-index="1"></span>
+          <span class="countdown__dot" data-index="2"></span>
+          <span class="countdown__dot" data-index="3"></span>
+        </div>
+        <p class="countdown__hint">Press <kbd>Space</kbd> to skip</p>
+      </div>
+    </div>
+
+    <!-- ==================== DRILL SCREEN ==================== -->
+    <div id="screen-drill" class="screen screen--drill hidden">
+      <!-- Drill Header -->
+      <header class="drill-header">
+        <div class="drill-timer" id="drill-timer">
+          <svg class="drill-timer__ring" viewBox="0 0 36 36">
+            <circle class="drill-timer__track" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+            <circle class="drill-timer__progress" id="timer-progress" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+          </svg>
+          <span class="drill-timer__text" id="timer-text">2:00</span>
+        </div>
+        <div class="drill-progress">
+          <div class="drill-progress__bar">
+            <div class="drill-progress__correct" id="progress-correct"></div>
+            <div class="drill-progress__incorrect" id="progress-incorrect"></div>
+            <div class="drill-progress__skipped" id="progress-skipped"></div>
+          </div>
+          <span class="drill-progress__count" id="progress-count">0</span>
+        </div>
+        <div class="drill-score" id="drill-score">
+          <span class="drill-score__value" id="score-value">0</span>
+          <span class="drill-score__label">pts</span>
+        </div>
+        <button id="btn-exit" class="icon-btn icon-btn--exit" aria-label="Exit drill">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Problem Display -->
+      <main class="drill-main">
+        <div class="drill-problem" id="drill-problem">
+          <span class="drill-problem__text" id="problem-text">17 &times; 8 =</span>
+        </div>
+
+        <!-- Input with Feedback -->
+        <div class="drill-input-wrapper" id="drill-input-wrapper">
+          <input
+            type="text"
+            inputmode="numeric"
+            id="drill-input"
+            class="drill-input"
+            autocomplete="off"
+            autofocus
+            placeholder="?"
+          >
+          <div class="drill-feedback hidden" id="drill-feedback">
+            <span class="drill-feedback__icon" id="feedback-icon"></span>
+            <span class="drill-feedback__text" id="feedback-text"></span>
+          </div>
+        </div>
+
+        <!-- Mobile Controls -->
+        <div class="drill-controls">
+          <button id="btn-skip" class="btn btn--secondary">
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="13 17 18 12 13 7"></polyline>
+              <polyline points="6 17 11 12 6 7"></polyline>
+            </svg>
+            Skip
+          </button>
+          <button id="btn-submit" class="btn btn--primary">
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Submit
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <!-- ==================== RESULTS SCREEN ==================== -->
+    <div id="screen-results" class="screen screen--results hidden">
+      <div class="results">
+        <!-- Score Circle -->
+        <div class="results__score-circle" id="results-score-circle">
+          <span class="results__score-value" id="results-score">0</span>
+          <span class="results__score-label">pts</span>
+        </div>
+
+        <!-- Benchmark Badge -->
+        <div class="results__benchmark" id="results-benchmark">
+          <span id="benchmark-text">Good</span>
+        </div>
+
+        <!-- New Record Badge -->
+        <div class="results__record hidden" id="results-record">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          New Personal Best!
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="results__stats">
+          <div class="stat">
+            <span class="stat__value stat__value--correct" id="results-correct">0</span>
+            <span class="stat__label">Correct</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value stat__value--incorrect" id="results-incorrect">0</span>
+            <span class="stat__label">Wrong</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value stat__value--skipped" id="results-skipped">0</span>
+            <span class="stat__label">Skipped</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="results-qpm">0.0</span>
+            <span class="stat__label">Q/min</span>
+          </div>
+        </div>
+
+        <!-- Accuracy Bar -->
+        <div class="results__accuracy">
+          <span class="results__accuracy-label">Accuracy</span>
+          <div class="results__accuracy-bar">
+            <div class="results__accuracy-fill" id="accuracy-fill"></div>
+          </div>
+          <span class="results__accuracy-value" id="accuracy-value">0%</span>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="results__actions">
+          <button id="btn-retry" class="btn btn--primary btn--large">
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            Try Again
+          </button>
+          <button id="btn-home" class="btn btn--secondary">
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Home
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== EXIT MODAL ==================== -->
+    <div id="modal-exit" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal__backdrop" id="modal-backdrop"></div>
+      <div class="modal__content">
+        <div class="modal__header">
+          <div class="modal__icon modal__icon--warning">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="modal__titles">
+            <h2 class="modal__title">Exit Session?</h2>
+            <p class="modal__subtitle">Your progress will not be saved</p>
+          </div>
+        </div>
+
+        <div class="modal__stats">
+          <div class="modal__stat">
+            <span class="modal__stat-label">Current Score</span>
+            <span class="modal__stat-value" id="exit-score">+0</span>
+          </div>
+          <div class="modal__stat">
+            <span class="modal__stat-label">Questions</span>
+            <span class="modal__stat-value" id="exit-questions">0</span>
+          </div>
+        </div>
+
+        <div class="modal__actions">
+          <button id="btn-continue" class="btn btn--primary">
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5,3 19,12 5,21"></polygon>
+            </svg>
+            Continue
+          </button>
+          <button id="btn-confirm-exit" class="btn btn--secondary btn--danger">
+            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Exit
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
