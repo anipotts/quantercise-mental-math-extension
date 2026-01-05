@@ -96,8 +96,8 @@ const elements = {
   tutorialTyped: $('#tutorial-typed'),
   tutorialInput: $('#tutorial-input'),
   tutorialDots: $$('.tutorial__dot'),
-  keyTab: $('#key-tab'),
-  keyEnter: $('#key-enter'),
+  tutorialBtnSkip: $('#tutorial-btn-skip'),
+  tutorialBtnSubmit: $('#tutorial-btn-submit'),
 
   // Countdown
   countdownValue: $('#countdown-value'),
@@ -308,8 +308,8 @@ function runTutorialCycle() {
     'tutorial__input--incorrect',
     'tutorial__input--skipped'
   );
-  elements.keyTab.classList.remove('tutorial__key--active-skip');
-  elements.keyEnter.classList.remove('tutorial__key--active-submit');
+  elements.tutorialBtnSkip.classList.remove('tutorial__btn--active');
+  elements.tutorialBtnSubmit.classList.remove('tutorial__btn--active');
 
   // Update dots
   elements.tutorialDots.forEach((dot, i) => {
@@ -332,7 +332,7 @@ function runTutorialCycle() {
   if (cycleType === 2) {
     // Skip animation
     state.tutorialTimeout = setTimeout(() => {
-      elements.keyTab.classList.add('tutorial__key--active-skip');
+      elements.tutorialBtnSkip.classList.add('tutorial__btn--active');
 
       state.tutorialTimeout = setTimeout(() => {
         elements.tutorialInput.classList.add('tutorial__input--skipped');
@@ -341,6 +341,7 @@ function runTutorialCycle() {
 
         // Advance to next
         state.tutorialTimeout = setTimeout(() => {
+          elements.tutorialBtnSkip.classList.remove('tutorial__btn--active');
           state.tutorialStep++;
           runTutorialCycle();
         }, 1000);
@@ -357,8 +358,8 @@ function runTutorialCycle() {
         clearInterval(state.tutorialTypingInterval);
         state.tutorialTypingInterval = null;
 
-        // Show submit key active
-        elements.keyEnter.classList.add('tutorial__key--active-submit');
+        // Show submit button active with glow
+        elements.tutorialBtnSubmit.classList.add('tutorial__btn--active');
 
         // Show feedback after short delay
         state.tutorialTimeout = setTimeout(() => {
@@ -375,6 +376,7 @@ function runTutorialCycle() {
 
           // Advance to next
           state.tutorialTimeout = setTimeout(() => {
+            elements.tutorialBtnSubmit.classList.remove('tutorial__btn--active');
             state.tutorialStep++;
             runTutorialCycle();
           }, 1200);

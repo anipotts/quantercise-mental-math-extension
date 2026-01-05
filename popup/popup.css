@@ -268,6 +268,7 @@ body {
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  color: var(--color-text);
 }
 
 .home-title__icon {
@@ -400,21 +401,26 @@ body {
 .tutorial__buttons {
   display: flex;
   gap: var(--space-2);
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .tutorial__btn {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-2) var(--space-3);
+  gap: 4px;
+  padding: 6px 12px;
   background: var(--color-bg-tertiary);
   border: none;
   border-radius: var(--radius-md);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--color-text-secondary);
   transition: all var(--transition-fast);
+}
+
+.tutorial__btn--skip {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
 }
 
 .tutorial__btn--submit {
@@ -422,9 +428,23 @@ body {
   color: white;
 }
 
+/* Glow states for tutorial buttons */
+.tutorial__btn--skip.tutorial__btn--active {
+  background: var(--color-skipped-bg);
+  color: var(--color-skipped);
+  box-shadow: 0 0 12px rgba(163, 163, 163, 0.4);
+}
+
+.tutorial__btn--submit.tutorial__btn--active {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 0 16px var(--color-primary-glow);
+  transform: scale(1.02);
+}
+
 .tutorial__btn-icon {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
 }
 
 /* Tutorial Controls - Hidden by default, for keyboard hints */
@@ -626,6 +646,7 @@ body {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  color: var(--color-text);
 }
 
 .drill-timer--low {
@@ -700,6 +721,7 @@ body {
   font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 600;
+  color: var(--color-text);
 }
 
 .drill-score--positive .drill-score__value { color: var(--color-correct); }

@@ -61,15 +61,20 @@
             <span id="tutorial-typed"></span>
             <span class="tutorial__cursor"></span>
           </div>
-          <div class="tutorial__controls">
-            <div class="tutorial__control">
-              <kbd class="tutorial__key" id="key-tab">Tab</kbd>
-              <span class="tutorial__label">Skip</span>
-            </div>
-            <div class="tutorial__control">
-              <kbd class="tutorial__key" id="key-enter">Enter</kbd>
-              <span class="tutorial__label">Submit</span>
-            </div>
+          <div class="tutorial__buttons">
+            <button class="tutorial__btn tutorial__btn--skip" id="tutorial-btn-skip">
+              <svg class="tutorial__btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="13 17 18 12 13 7"></polyline>
+                <polyline points="6 17 11 12 6 7"></polyline>
+              </svg>
+              Skip
+            </button>
+            <button class="tutorial__btn tutorial__btn--submit" id="tutorial-btn-submit">
+              <svg class="tutorial__btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Submit
+            </button>
           </div>
           <div class="tutorial__dots">
             <span class="tutorial__dot" data-step="0"></span>
