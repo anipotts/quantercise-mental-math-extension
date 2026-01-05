@@ -3,6 +3,8 @@
   "name": "Quantercise Mental Math",
   "version": "1.0.0",
   "description": "Sharpen your mental math skills with timed arithmetic drills. Quick Drill mode: 2 minutes of unlimited arithmetic problems.",
+  "author": "Quantercise",
+  "homepage_url": "https://quantercise.com",
   "icons": {
     "16": "assets/icon-16.png",
     "48": "assets/icon-48.png",
