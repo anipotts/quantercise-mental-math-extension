@@ -174,6 +174,110 @@ class Storage {
     const trimmed = history.slice(0, 20);
     await this.set(STORAGE_KEYS.history, trimmed);
   }
+
+  // ========================================
+  // Streak methods
+  // ========================================
+
+  /**
+   * Get current streak
+   * @returns {Promise<number>}
+   */
+  async getCurrentStreak() {
+    return (await this.get(STORAGE_KEYS.currentStreak)) || 0;
+  }
+
+  /**
+   * Get longest streak
+   * @returns {Promise<number>}
+   */
+  async getLongestStreak() {
+    return (await this.get(STORAGE_KEYS.longestStreak)) || 0;
+  }
+
+  /**
+   * Get last activity date (ISO string)
+   * @returns {Promise<string|null>}
+   */
+  async getLastActivityDate() {
+    return await this.get(STORAGE_KEYS.lastActivityDate);
+  }
+
+  /**
+   * Update streak on drill completion
+   * Logic: Same day = no change, next day = +1, 2+ days gap = reset to 1
+   * @returns {Promise<{currentStreak: number, longestStreak: number, isNewRecord: boolean}>}
+   */
+  async updateStreak() {
+    const now = new Date();
+    const todayStr = now.toISOString().split('T')[0]; // YYYY-MM-DD
+
+    const lastActivityStr = await this.getLastActivityDate();
+    let currentStreak = await this.getCurrentStreak();
+    let longestStreak = await this.getLongestStreak();
+
+    if (!lastActivityStr) {
+      // First ever activity
+      currentStreak = 1;
+    } else {
+      const lastDate = new Date(lastActivityStr);
+      const today = new Date(todayStr);
+      const diffDays = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+
+      if (diffDays === 0) {
+        // Same day - no change to streak
+      } else if (diffDays === 1) {
+        // Consecutive day - increment streak
+        currentStreak += 1;
+      } else {
+        // Streak broken - reset to 1
+        currentStreak = 1;
+      }
+    }
+
+    // Update longest streak if needed
+    const isNewRecord = currentStreak > longestStreak;
+    if (isNewRecord) {
+      longestStreak = currentStreak;
+      await this.set(STORAGE_KEYS.longestStreak, longestStreak);
+    }
+
+    // Save current streak and activity date
+    await this.set(STORAGE_KEYS.currentStreak, currentStreak);
+    await this.set(STORAGE_KEYS.lastActivityDate, todayStr);
+
+    return { currentStreak, longestStreak, isNewRecord };
+  }
+
+  /**
+   * Get streak info (for display)
+   * Also checks if streak is still active (not expired)
+   * @returns {Promise<{currentStreak: number, longestStreak: number, isActive: boolean}>}
+   */
+  async getStreakInfo() {
+    const lastActivityStr = await this.getLastActivityDate();
+    let currentStreak = await this.getCurrentStreak();
+    const longestStreak = await this.getLongestStreak();
+
+    // Check if streak is still active (activity within last 24-48 hours)
+    let isActive = false;
+    if (lastActivityStr) {
+      const lastDate = new Date(lastActivityStr);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const diffDays = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+
+      // Streak is active if activity was today or yesterday
+      isActive = diffDays <= 1;
+
+      // If more than 1 day gap, streak would reset on next activity
+      if (diffDays > 1) {
+        currentStreak = 0; // Show 0 to indicate broken streak
+      }
+    }
+
+    return { currentStreak, longestStreak, isActive };
+  }
 }
 
 // Export singleton instance

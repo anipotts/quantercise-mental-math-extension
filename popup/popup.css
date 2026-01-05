@@ -516,6 +516,132 @@ body {
   font-family: var(--font-mono);
   font-size: 14px;
   font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Streak styling */
+.home-stat__value--streak {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.streak-flame {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.home-stat--streak.streak-active .streak-flame {
+  animation: flame-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes flame-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.home-stat--streak.streak-inactive .streak-flame {
+  opacity: 0.4;
+}
+
+/* History Section */
+.history-section {
+  margin-top: var(--space-2);
+  padding: 0 var(--space-4);
+}
+
+.history-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 100%;
+  padding: var(--space-2);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.history-toggle:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
+.history-toggle__icon {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--transition-fast);
+}
+
+.history-toggle.expanded .history-toggle__icon {
+  transform: rotate(180deg);
+}
+
+.history-list {
+  margin-top: var(--space-2);
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.history-empty {
+  padding: var(--space-3);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.history-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 11px;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-item__date {
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+.history-item__stats {
+  display: flex;
+  gap: var(--space-3);
+  color: var(--color-text);
+}
+
+.history-item__stat {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.history-item__stat-label {
+  color: var(--color-text-muted);
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.history-item__stat-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
 }
 
 /* Home Link */

@@ -99,7 +99,10 @@ export const STORAGE_KEYS = {
   bestScore: 'quantercise_best_score',
   lastScore: 'quantercise_last_score',
   totalDrills: 'quantercise_total_drills',
-  history: 'quantercise_history'
+  history: 'quantercise_history',
+  currentStreak: 'quantercise_current_streak',
+  longestStreak: 'quantercise_longest_streak',
+  lastActivityDate: 'quantercise_last_activity_date'
 };
 
 // Benchmark level names

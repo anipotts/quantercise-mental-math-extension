@@ -51,6 +51,7 @@ const state = {
   // Timer state
   timeRemainingMs: QUICK_DRILL_PRESET.timeLimitSeconds * 1000,
   timerInterval: null,
+  lowTimeSoundPlayed: false,
 
   // Countdown state
   countdownIndex: 0,
@@ -65,7 +66,8 @@ const state = {
   // Stats
   bestScore: 0,
   lastScore: null,
-  totalDrills: 0
+  currentStreak: 0,
+  streakActive: false
 };
 
 // ============================================================================
@@ -91,7 +93,12 @@ const elements = {
   btnStart: $('#btn-start'),
   statBest: $('#stat-best'),
   statLast: $('#stat-last'),
-  statTotal: $('#stat-total'),
+  statStreakContainer: $('#stat-streak-container'),
+  streakCount: $('#streak-count'),
+  historyToggle: $('#history-toggle'),
+  historyList: $('#history-list'),
+  historyEmpty: $('#history-empty'),
+  historyItems: $('#history-items'),
   tutorialProblem: $('#tutorial-problem'),
   tutorialTyped: $('#tutorial-typed'),
   tutorialInput: $('#tutorial-input'),
@@ -470,6 +477,7 @@ function startDrill() {
   state.incorrect = 0;
   state.skipped = 0;
   state.timeRemainingMs = QUICK_DRILL_PRESET.timeLimitSeconds * 1000;
+  state.lowTimeSoundPlayed = false;
 
   // Reset UI
   updateDrillUI();
@@ -646,6 +654,11 @@ function updateTimerDisplay(timeMs, circumference) {
     elements.drillTimer.classList.add('drill-timer--critical');
   } else if (progress <= LOW_TIME_THRESHOLD) {
     elements.drillTimer.classList.add('drill-timer--low');
+    // Play warning sound once when crossing threshold
+    if (!state.lowTimeSoundPlayed) {
+      state.lowTimeSoundPlayed = true;
+      playSound('lowTime');
+    }
   }
 }
 
@@ -728,7 +741,7 @@ function endDrill() {
 
   storage.setLastScore(sessionData);
   storage.addToHistory(sessionData);
-  storage.incrementTotalDrills();
+  storage.updateStreak();
 
   showScreen(SCREENS.RESULTS);
 }
@@ -783,11 +796,73 @@ function handleKeydown(e) {
 async function loadStats() {
   state.bestScore = await storage.getBestScore();
   state.lastScore = await storage.getLastScore();
-  state.totalDrills = await storage.getTotalDrills();
 
+  // Load streak info
+  const streakInfo = await storage.getStreakInfo();
+  state.currentStreak = streakInfo.currentStreak;
+  state.streakActive = streakInfo.isActive;
+
+  // Update UI
   elements.statBest.textContent = state.bestScore > 0 ? state.bestScore : '--';
   elements.statLast.textContent = state.lastScore ? state.lastScore.score : '--';
-  elements.statTotal.textContent = state.totalDrills;
+  elements.streakCount.textContent = state.currentStreak;
+
+  // Update streak visual state
+  elements.statStreakContainer.classList.remove('streak-active', 'streak-inactive');
+  if (state.currentStreak > 0) {
+    elements.statStreakContainer.classList.add(state.streakActive ? 'streak-active' : 'streak-inactive');
+  }
+}
+
+// ============================================================================
+// HISTORY
+// ============================================================================
+
+function toggleHistory() {
+  const isExpanded = elements.historyToggle.classList.toggle('expanded');
+  elements.historyList.classList.toggle('hidden', !isExpanded);
+
+  if (isExpanded) {
+    loadHistory();
+  }
+}
+
+async function loadHistory() {
+  const history = await storage.getHistory();
+
+  if (history.length === 0) {
+    elements.historyEmpty.classList.remove('hidden');
+    elements.historyItems.innerHTML = '';
+    return;
+  }
+
+  elements.historyEmpty.classList.add('hidden');
+  elements.historyItems.innerHTML = history.map(session => {
+    const date = new Date(session.date);
+    const dateStr = date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric'
+    });
+    const timeStr = date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit'
+    });
+
+    return `
+      <div class="history-item">
+        <span class="history-item__date">${dateStr} ${timeStr}</span>
+        <div class="history-item__stats">
+          <span class="history-item__stat">
+            <span class="history-item__stat-value">${session.score}</span>
+            <span class="history-item__stat-label">pts</span>
+          </span>
+          <span class="history-item__stat">
+            <span class="history-item__stat-value">${session.accuracy}%</span>
+          </span>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 // ============================================================================
@@ -807,6 +882,7 @@ async function init() {
     initAudio();
     showScreen(SCREENS.COUNTDOWN);
   });
+  elements.historyToggle.addEventListener('click', toggleHistory);
 
   // Event listeners - Drill
   elements.btnSubmit.addEventListener('click', submitAnswer);

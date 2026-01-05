@@ -108,9 +108,25 @@
           <span class="home-stat__label">Last</span>
           <span class="home-stat__value" id="stat-last">--</span>
         </div>
-        <div class="home-stat">
-          <span class="home-stat__label">Drills</span>
-          <span class="home-stat__value" id="stat-total">0</span>
+        <div class="home-stat home-stat--streak" id="stat-streak-container">
+          <span class="home-stat__label">Streak</span>
+          <span class="home-stat__value home-stat__value--streak" id="stat-streak">
+            <span class="streak-flame">🔥</span><span id="streak-count">0</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- History Section -->
+      <div class="history-section">
+        <button class="history-toggle" id="history-toggle">
+          <span class="history-toggle__text">History</span>
+          <svg class="history-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6,9 12,15 18,9"></polyline>
+          </svg>
+        </button>
+        <div class="history-list hidden" id="history-list">
+          <div class="history-empty" id="history-empty">No sessions yet</div>
+          <div class="history-items" id="history-items"></div>
         </div>
       </div>
 
